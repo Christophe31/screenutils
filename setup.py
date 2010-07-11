@@ -10,6 +10,6 @@ setup(
     url="http://github.com/Christophe31/screenutils",
     description =
     "Handle gnu-screen: creates/close/list sessions, injects commands...",
-    long_description=open('README.txt').read(),
+    long_description=open('README.rst').read(),
 )
 

@@ -6,11 +6,12 @@
 # Please ask if you wish a more permissive license.
 
 from commands import getoutput
-from multiprocessing import Process
+from threading import Thread
 from os import system
 from time import sleep
 
 from errors import ScreenNotFoundError
+
 
 def list_screens():
     """List all the existing screens and build a Screen instance for each
@@ -59,7 +60,7 @@ class Screen(object):
         """Tell if the screen session exists or not."""
         # Parse the screen -ls call, to find if the screen exists or not.
         # The screen -ls | grep name returns something like that:
-        # "	28062.G.Terminal	(Detached)"
+        #  "	28062.G.Terminal	(Detached)"
         lines = getoutput("screen -ls | grep " + self.name).split('\n')
         return self.name in [".".join(l.split(".")[1:]).split("\t")[0]
                              for l in lines]
@@ -67,10 +68,10 @@ class Screen(object):
     def initialize(self):
         """initialize a screen, if does not exists yet"""
         if not self.exists:
-            # Detach the screen once attached, on a new process.
-            Process(target=self._delayed_detach).start()
-            # support Unicode (U), and attach to the existing screen, even if
-            # already initialized (R).
+            # Detach the screen once attached, on a new tread.
+            Thread(target=self._delayed_detach).start()
+            # support Unicode (-U),
+            # attach to a new/existing named screen (-R).
             system('screen -UR ' + self.name)
 
     def interrupt(self):
@@ -79,7 +80,7 @@ class Screen(object):
         system("screen -x " + self.name + " -X eval \"stuff \\003\"")
 
     def kill(self):
-        """Kill the screen applications then quit the screen"""
+        """Kill the screen applications then close the screen"""
         self._check_exists()
         system('screen -x ' + self.name + ' -X quit')
 
@@ -89,7 +90,7 @@ class Screen(object):
         system("screen -d " + self.name)
 
     def _delayed_detach(self):
-        sleep(5)
+        sleep(0.5)
         self.detach()
 
     def send_commands(self, *commands):

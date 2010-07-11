@@ -11,7 +11,7 @@
 # Author: Christophe Narbonne
 # Contrib: Alexis Metaireau
 from commands import getoutput
-from multiprocessing import Process
+from treading import Process
 from os import system
 from time import sleep
 

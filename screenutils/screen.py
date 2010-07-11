@@ -67,10 +67,10 @@ class Screen(object):
     def initialize(self):
         """initialize a screen, if does not exists yet"""
         if not self.exists:
-            # Detach the screen once attached, on a new process.
+            # Detach the screen once attached, on a new tread.
             Thread(target=self._delayed_detach).start()
-            # support Unicode (U), and attach to the existing screen, even if
-            # already initialized (R).
+            # support Unicode (-U),
+            # attach to a new/existing named screen (-R).
             system('screen -UR ' + self.name)
 
     def interrupt(self):
@@ -79,7 +79,7 @@ class Screen(object):
         system("screen -x " + self.name + " -X eval \"stuff \\003\"")
 
     def kill(self):
-        """Kill the screen applications then quit the screen"""
+        """Kill the screen applications then close the screen"""
         self._check_exists()
         system('screen -x ' + self.name + ' -X quit')
 

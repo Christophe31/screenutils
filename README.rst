@@ -28,3 +28,10 @@ Known issues
 -------------
 
 This may not work with bpython.
+
+Roadmap
+--------
+
+ * Read the screen manual or get a screen power user to get info about
+   lacking features
+ * allow to insert manually screen specific commands just after screen -x name -X <addCommandHere>

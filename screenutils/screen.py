@@ -8,9 +8,26 @@
 from commands import getoutput
 from threading import Thread
 from os import system
+from os.path import isfile, getsize
 from time import sleep
 
 from errors import ScreenNotFoundError
+
+def tailf(file_):
+    """Each value is content added to the log file since last value return"""
+    last_size = getsize(file_)
+    while True:
+        cur_size = getsize(file_)
+        if ( cur_size != last_size ):
+            f = open(file_, 'r')
+            f.seek(last_size if cur_size > last_size else 0)
+            text = f.read()
+            f.close()
+            last_size = cur_size
+            yield text
+        else:
+            yield ""
+
 
 def list_screens():
     """List all the existing screens and build a Screen instance for each
@@ -38,6 +55,7 @@ class Screen(object):
         self.name = name
         self._id = None
         self._status = None
+        self.logs=None
         if initialize:
             self.initialize()
 
@@ -63,6 +81,15 @@ class Screen(object):
         lines = getoutput("screen -ls | grep " + self.name).split('\n')
         return self.name in [".".join(l.split(".")[1:]).split("\t")[0]
                              for l in lines]
+
+    def enable_logs(self):
+        system("screen -x " + self.name + " -X logfile " + self.name)
+        system("screen -x " + self.name + " -X log on")
+        self.logs=tailf(self.name)
+
+    def disable_logs(self):
+        system("screen -x " + self.name + " -X log off")
+        self.logs=None
 
     def initialize(self):
         """initialize a screen, if does not exists yet"""

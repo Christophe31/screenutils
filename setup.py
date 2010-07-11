@@ -7,6 +7,7 @@ setup(
     license='GNU Public License >=2 (ask me if you want other)',
     author="Christophe Narbonne",
     author_email="@Christophe31",
+    url="http://github.com/Christophe31/screenutils",
     description =
     "Handle gnu-screen: creates/close/list sessions, injects commands...",
     long_description=open('README.txt').read(),

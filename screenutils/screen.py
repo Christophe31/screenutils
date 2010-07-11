@@ -10,6 +10,7 @@ from multiprocessing import Process
 from os import system
 from time import sleep
 
+from errors import ScreenNotFoundError
 
 def list_screens():
     """List all the existing screens and build a Screen instance for each
@@ -18,14 +19,10 @@ def list_screens():
                 for l in getoutput("screen -ls | grep -P '\t'").split('\n')]
 
 
-class ScreenNotFoundError(Exception):
-    """raised when the screen does not exists"""
-
-
 class Screen(object):
     """Represents a gnu-screen object::
 
-        >>> s=Screen("screenName", create=True)
+        >>> s=Screen("screenName", initialize=True)
         >>> s.name
         'screenName'
         >>> s.exists
@@ -37,12 +34,12 @@ class Screen(object):
         False
     """
 
-    def __init__(self, name, create=False):
+    def __init__(self, name, initialize=False):
         self.name = name
         self._id = None
         self._status = None
-        if create:
-            self.create()
+        if initialize:
+            self.initialize()
 
     @property
     def id(self):
@@ -60,16 +57,20 @@ class Screen(object):
     @property
     def exists(self):
         """Tell if the screen session exists or not."""
-        # output line sample:
+        # Parse the screen -ls call, to find if the screen exists or not.
+        # The screen -ls | grep name returns something like that:
         # "	28062.G.Terminal	(Detached)"
         lines = getoutput("screen -ls | grep " + self.name).split('\n')
         return self.name in [".".join(l.split(".")[1:]).split("\t")[0]
                              for l in lines]
 
-    def create(self):
-        """create a screen, if does not exists yet"""
+    def initialize(self):
+        """initialize a screen, if does not exists yet"""
         if not self.exists:
+            # Detach the screen once attached, on a new process.
             Process(target=self._delayed_detach).start()
+            # support Unicode (U), and attach to the existing screen, even if
+            # already initialized (R).
             system('screen -UR ' + self.name)
 
     def interrupt(self):

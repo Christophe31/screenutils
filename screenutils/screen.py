@@ -138,8 +138,11 @@ class Screen(object):
         if self.exists:
             infos = getoutput("screen -ls | grep %s" % self.name).split('\t')[1:]
             self._id = infos[0].split('.')[0]
-            self._date = infos[1][1:-1]
-            self._status = infos[2][1:-1]
+            if len(infos)==3:
+                self._date = infos[1][1:-1]
+                self._status = infos[2][1:-1]
+            else:
+                self._status = infos[1][1:-1]
 
     def __repr__(self):
         return "<%s '%s'>" % (self.__class__.__name__, self.name)

@@ -32,8 +32,11 @@ def tailf(file_):
 def list_screens():
     """List all the existing screens and build a Screen instance for each
     """
-    return [Screen(".".join(l.split(".")[1:]).split("\t")[0])
-                for l in getoutput("screen -ls | grep -P '\t'").split('\n')]
+    return [
+                Screen(".".join(l.split(".")[1:]).split("\t")[0])
+                for l in getoutput("screen -ls | grep -P '\t'").split('\n')
+                if ".".join(l.split(".")[1:]).split("\t")[0]
+            ]
 
 
 class Screen(object):
@@ -86,6 +89,8 @@ class Screen(object):
         system("screen -x " + self.name + " -X logfile " + self.name)
         system("screen -x " + self.name + " -X log on")
         self.logs=tailf(self.name)
+        system('touch '+self.name)
+        next(self.logs)
 
     def disable_logs(self):
         system("screen -x " + self.name + " -X log off")

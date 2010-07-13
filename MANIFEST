@@ -1,3 +1,5 @@
-README.txt
+README.rst
 setup.py
 screenutils/__init__.py
+screenutils/errors.py
+screenutils/screen.py

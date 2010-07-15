@@ -62,9 +62,6 @@ Or by just using the packages publicated at pypi, for instance with pip::
 Known issues
 -------------
 
-<<<<<<< HEAD
-This may not work with bpython, use python 2.6 or upper
-=======
 This may not work with bpython.
 
 Roadmap
@@ -72,5 +69,5 @@ Roadmap
 
  * Read the screen manual or get a screen power user to get info about
    lacking features
- * allow to insert manually screen specific commands just after screen -x name -X <addCommandHere>
->>>>>>> f1e81f787efb4a130f864090f28d89217bb9aafa
+ * allow to insert manually screen specific commands just after::
+    $ screen -x name -X <addCommandHere>

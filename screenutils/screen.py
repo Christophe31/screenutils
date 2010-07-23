@@ -5,13 +5,16 @@
 # and/or modify it under the terms of the GNU Public License 2 or upper.
 # Please ask if you wish a more permissive license.
 
-from commands import getoutput
+from screenutils.errors import ScreenNotFoundError
+
+try:
+    from commands import getoutput
+except:
+    from subprocess import getoutput
 from threading import Thread
 from os import system
 from os.path import isfile, getsize
 from time import sleep
-
-from errors import ScreenNotFoundError
 
 def tailf(file_):
     """Each value is content added to the log file since last value return"""

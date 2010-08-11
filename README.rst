@@ -9,9 +9,7 @@ available under the terms of the GPLv2.
 Exemple usage
 -------------
 
-Exemple in a python console:
-
-.. code-block:: python
+Exemple in a python console::
 
    >>> from screenutils import list_screens, Screen
    >>> list_screens()

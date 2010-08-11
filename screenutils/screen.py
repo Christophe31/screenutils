@@ -89,14 +89,13 @@ class Screen(object):
                              for l in lines]
 
     def enable_logs(self):
-        system("screen -x " + self.name + " -X logfile " + self.name)
-        system("screen -x " + self.name + " -X log on")
-        self.logs=tailf(self.name)
+        self._screen_commands("logfile " + self.name, "log on")
         system('touch '+self.name)
+        self.logs=tailf(self.name)
         next(self.logs)
 
     def disable_logs(self):
-        system("screen -x " + self.name + " -X log off")
+        self._screen_commands("log off")
         self.logs=None
 
     def initialize(self):
@@ -110,31 +109,35 @@ class Screen(object):
 
     def interrupt(self):
         """Insert CTRL+C in the screen session"""
-        self._check_exists()
-        system("screen -x " + self.name + " -X eval \"stuff \\003\"")
+        self._screen_commands("eval \"stuff \\003\"")
 
     def kill(self):
         """Kill the screen applications then close the screen"""
-        self._check_exists()
-        system('screen -x ' + self.name + ' -X quit')
+        self._screen_commands('quit')
 
     def detach(self):
         """detach the screen"""
         self._check_exists()
         system("screen -d " + self.name)
 
-    def _delayed_detach(self):
-        sleep(0.5)
-        self.detach()
-
     def send_commands(self, *commands):
         """send commands to the active gnu-screen"""
         self._check_exists()
         for command in commands:
+            self._screen_commands( 'stuff "' + command + '" ' ,
+                                   'eval "stuff \\015"' )
+
+    def add_user_access(self, unix_user_name):
+        """allow to share your session with an other unix user"""
+        self._screen_commands('multiuser on', 'acladd ' + unix_user_name)
+
+    def _screen_commands(self, *commands):
+        """allow to insert generic screen specific commands
+        a glossary of the existing screen command in `man screen`"""
+        self._check_exists()
+        for command in commands:
+            system('screen -x ' + self.name + ' -X "' + command + '" ')
             sleep(0.02)
-            system('screen -x ' + self.name + ' -X stuff "' + command + '" ')
-            sleep(0.02)
-            system('screen -x ' + self.name + ' -X eval "stuff \\015" ')
 
     def _check_exists(self, message="Error code: 404"):
         """check whereas the screen exist. if not, raise an exception"""
@@ -151,6 +154,10 @@ class Screen(object):
                 self._status = infos[2][1:-1]
             else:
                 self._status = infos[1][1:-1]
+
+    def _delayed_detach(self):
+        sleep(0.5)
+        self.detach()
 
     def __repr__(self):
         return "<%s '%s'>" % (self.__class__.__name__, self.name)

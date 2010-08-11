@@ -11,7 +11,7 @@ Exemple usage
 
 Exemple in a python console:
 
-code-block:: python
+.. code-block:: python
 
    >>> from screenutils import list_screens, Screen
    >>> list_screens()

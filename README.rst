@@ -1,7 +1,7 @@
 screenutils
 ===========
 
-screenutils is a set of classes that sould help handling gnu-screen windows.
+screenutils is a set of classes that should help handling gnu-screen windows.
 
 Feel free to report any modification you made, the whole code source is
 available under the terms of the GPLv2.
@@ -68,14 +68,14 @@ Features
  * screen code insertion
  * screen monitoring/logging
  * screen session sharing with unix users
-    - _ to allow this feature, you will **need** to change some unixs rigths _:
+    - to allow this feature, you will **need** to change some unixs rigths:
         + ``sudo chmod +s /usr/bin/screen``
 	+ ``sudo chmod 755 /var/run/screen``
 
 Known issues
 -------------
 
-This may not work with bpython.
+This may not work properly with bpython.
 
 Roadmap
 --------

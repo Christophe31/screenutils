@@ -68,6 +68,9 @@ Features
  * screen code insertion
  * screen monitoring/logging
  * screen session sharing with unix users
+    - _ to allow this feature, you will **need** to change some unixs rigths _:
+        + ``sudo chmod +s /usr/bin/screen``
+	+ ``sudo chmod 755 /var/run/screen``
 
 Known issues
 -------------

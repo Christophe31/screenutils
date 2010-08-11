@@ -136,7 +136,7 @@ class Screen(object):
         a glossary of the existing screen command in `man screen`"""
         self._check_exists()
         for command in commands:
-            system('screen -x ' + self.name + ' -X "' + command + '" ')
+            system('screen -x ' + self.name + ' -X ' + command)
             sleep(0.02)
 
     def _check_exists(self, message="Error code: 404"):

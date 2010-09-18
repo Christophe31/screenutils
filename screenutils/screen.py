@@ -101,6 +101,7 @@ class Screen(object):
     def initialize(self):
         """initialize a screen, if does not exists yet"""
         if not self.exists:
+            self._id=None
             # Detach the screen once attached, on a new tread.
             Thread(target=self._delayed_detach).start()
             # support Unicode (-U),

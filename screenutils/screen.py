@@ -16,6 +16,8 @@ from os import system
 from os.path import isfile, getsize
 from time import sleep
 
+GREP_V = getoutput("grep -V")
+
 def tailf(file_):
     """Each value is content added to the log file since last value return"""
     last_size = getsize(file_)
@@ -35,9 +37,17 @@ def tailf(file_):
 def list_screens():
     """List all the existing screens and build a Screen instance for each
     """
+    if "FreeBSD" in GREP_V:
+        #freeBSD doesn't support the -P, "perl-regexp" flag.
+        #It works fine without it though!
+        grep_perl_flag = ""
+    else:
+        grep_perl_flag = " -P"
+
+    list_cmd = "screen -ls | grep{0} '\t'".format(grep_perl_flag)
     return [
                 Screen(".".join(l.split(".")[1:]).split("\t")[0])
-                for l in getoutput("screen -ls | grep -P '\t'").split('\n')
+                for l in getoutput(list_cmd).split('\n')
                 if ".".join(l.split(".")[1:]).split("\t")[0]
             ]
 

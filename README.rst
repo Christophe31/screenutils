@@ -51,9 +51,7 @@ Installation
 
 You could install screenutils from github, by doing the following::
 
-    $ git clone http://github.com/Christophe31/screenutils.git
-    $ cd screenutils
-    $ python setup.py install
+    $ pip install git+http://github.com/Christophe31/screenutils.git
 
 Or by just using the packages publicated at pypi, for instance with pip::
 

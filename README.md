@@ -91,6 +91,9 @@ True
 ###Utilities
   * `list_screens()` list screens. Returns a list of `Screen` instances.
 
+###Errors
+  * `ScreenNotFoundError`: Raised when a screen wasn't found.
+
 Feel free to report any modification you made, the whole code source is
 available under the terms of the GPLv2.
 

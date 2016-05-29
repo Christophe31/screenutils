@@ -6,10 +6,10 @@ screenutils is a set of classes that should help handling gnu-screen windows.
 Feel free to report any modification you made, the whole code source is
 available under the terms of the GPLv2.
 
-Exemple usage
+Example usage
 -------------
 
-Exemple in a python console::
+Example in a python console::
 
    >>> from screenutils import list_screens, Screen
    >>> list_screens()
@@ -68,7 +68,7 @@ Features
 * screen session sharing with unix users
     - to allow this feature, you will **need** to change some unixs rigths:
         + ``sudo chmod +s /usr/bin/screen``
-	+ ``sudo chmod 755 /var/run/screen``
+  + ``sudo chmod 755 /var/run/screen``
 
 Core Documentation
 ------------------
@@ -81,7 +81,7 @@ Core Documentation
 * `screen.id` (property) the id of the screen as a string.
 * `screen.status` (property) the status of the screen as a string.
 * `screen.exists` (property) True if the screen exists (has been intialized)
-   - _NOTE: `.id`,`.status`,`.exists` are all based off of the output of_ `screen -ls`
+   - NOTE: `.id`,`.status`,`.exists` are all based off of the output of `screen -ls`
 * `screen.intialize` Initialize a screen if does not exists yet. Equivalant to running `screen -UR screen_name`
 * `screen.enable_logs()` turns Screen's logging on. The Logfile's name is automatically set to that of the `Screen` object.
 * `screen.log` A generator that acts like `tailF` on the logfile.
@@ -92,7 +92,7 @@ Core Documentation
    - `*commands` the command(s) to run (as a string).
 * `screen.add_user_access(unix_user_name)` Allow another user to access the screen.
    - **unix\_user\_name** (required): the unix name of the user to add.
-   - __NOTE: to allow this feature, you will **need** to change some unixs rigths:__
+   - NOTE: to allow this feature, you will **need** to change some unixs rigths:
      + ``sudo chmod +s /usr/bin/screen``
      + ``sudo chmod 755 /var/run/screen``
 
@@ -103,7 +103,7 @@ Core Documentation
 *Exceptions* :
 
 * `ScreenNotFoundError`: Raised when a screen wasn't found.
- 
+
 Known issues
 -------------
 

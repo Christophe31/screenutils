@@ -100,7 +100,7 @@ Core Documentation
 
 * `list_screens()` list screens. Returns a list of `Screen` instances.
 
-*Exceptoions* :
+*Exceptions* :
 
 * `ScreenNotFoundError`: Raised when a screen wasn't found.
  

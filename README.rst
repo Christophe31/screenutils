@@ -60,12 +60,12 @@ Or by just using the packages publicated at pypi, for instance with pip::
 Features
 ---------
 
- * screens listing
- * screen session creation
- * screen session closing
- * screen code insertion
- * screen monitoring/logging
- * screen session sharing with unix users
+* screens listing
+* screen session creation
+* screen session closing
+* screen code insertion
+* screen monitoring/logging
+* screen session sharing with unix users
     - to allow this feature, you will **need** to change some unixs rigths:
         + ``sudo chmod +s /usr/bin/screen``
 	+ ``sudo chmod 755 /var/run/screen``
@@ -75,34 +75,34 @@ Core Documentation
 
 *Screen class*:
 
- * `Screen(name, intialize=False)` Create a new screen.
+* `Screen(name, intialize=False)` Create a new screen.
    - **name** (required): The name associated with the screen.
    - **Initialize**: If True, creates a screen session if it does not exists.
- * `screen.id` (property) the id of the screen as a string.
- * `screen.status` (property) the status of the screen as a string.
- * `screen.exists` (property) True if the screen exists (has been intialized)
+* `screen.id` (property) the id of the screen as a string.
+* `screen.status` (property) the status of the screen as a string.
+* `screen.exists` (property) True if the screen exists (has been intialized)
    - _NOTE: `.id`,`.status`,`.exists` are all based off of the output of_ `screen -ls`
- * `screen.intialize` Initialize a screen if does not exists yet. Equivalant to running `screen -UR screen_name`
- * `screen.enable_logs()` turns Screen's logging on. The Logfile's name is automatically set to that of the `Screen` object.
- * `screen.log` A generator that acts like `tailF` on the logfile.
- * `screen.disable_logs()` turns logging off.
- * `screen.kill()` Quit the screen. Equivilent to running `screen -x screen_name -X quit`
- * `screen.detach()` Detach from the screen.
- * `screen.send_commands(*commands)` send bash commands to the screen.
+* `screen.intialize` Initialize a screen if does not exists yet. Equivalant to running `screen -UR screen_name`
+* `screen.enable_logs()` turns Screen's logging on. The Logfile's name is automatically set to that of the `Screen` object.
+* `screen.log` A generator that acts like `tailF` on the logfile.
+* `screen.disable_logs()` turns logging off.
+* `screen.kill()` Quit the screen. Equivilent to running `screen -x screen_name -X quit`
+* `screen.detach()` Detach from the screen.
+* `screen.send_commands(*commands)` send bash commands to the screen.
    - `*commands` the command(s) to run (as a string).
- * `screen.add_user_access(unix_user_name)` Allow another user to access the screen.
+* `screen.add_user_access(unix_user_name)` Allow another user to access the screen.
    - **unix\_user\_name** (required): the unix name of the user to add.
-   - _NOTE: to allow this feature, you will **need** to change some unixs rigths:_
+   - __NOTE: to allow this feature, you will **need** to change some unixs rigths:__
      + ``sudo chmod +s /usr/bin/screen``
      + ``sudo chmod 755 /var/run/screen``
 
 *Functions* :
 
- * `list_screens()` list screens. Returns a list of `Screen` instances.
+* `list_screens()` list screens. Returns a list of `Screen` instances.
 
-*Exceptoions* :
+*Exceptions* :
 
- * `ScreenNotFoundError`: Raised when a screen wasn't found.
+* `ScreenNotFoundError`: Raised when a screen wasn't found.
  
 Known issues
 -------------
@@ -112,4 +112,4 @@ This may not work properly with bpython.
 Roadmap
 --------
 
- * multi windows screen support
+* multi windows screen support

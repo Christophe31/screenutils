@@ -153,7 +153,7 @@ class Screen(object):
     def _check_exists(self, message="Error code: 404"):
         """check whereas the screen exist. if not, raise an exception"""
         if not self.exists:
-            raise ScreenNotFoundError(message)
+            raise ScreenNotFoundError(message, self.name)
 
     def _set_screen_infos(self):
         """set the screen information related parameters"""

@@ -150,7 +150,7 @@ class Screen(object):
             system('screen -x ' + self.name + ' -X ' + command)
             sleep(0.02)
 
-    def _check_exists(self, message="Error code: 404"):
+    def _check_exists(self, message="Error code: 404."):
         """check whereas the screen exist. if not, raise an exception"""
         if not self.exists:
             raise ScreenNotFoundError(message, self.name)

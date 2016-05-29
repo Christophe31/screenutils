@@ -16,6 +16,6 @@ setup(
         "Intended Audience :: Developers",
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
-    long_description=open('README.rst').read(),
+    long_description=open('README.md').read(),
 )
 

@@ -77,7 +77,7 @@ Core Documentation
 
   - ``name`` (required): The name associated with the screen.
 
-  - ``Initialize``: If True, creates a screen session if it does not exists.
+  - ``initialize``: If True, creates a screen session if it does not exists.
 
 * ``screen.id`` (property) the id of the screen as a string.
 * ``screen.status`` (property) the status of the screen as a string.
@@ -97,9 +97,9 @@ Core Documentation
 
 * ``screen.add_user_access(unix_user_name)`` Allow another user to access the screen.
 
-  - ``unix\_user\_name`` (required): the unix name of the user to add.
+  - ``unix_user_name`` (required): the unix name of the user to add.
 
-  - *NOTE: to allow this feature, you will **need** to change some unix rights:
+  - \*NOTE: to allow this feature, you will **need** to change some unix rights:
 
     + ``sudo chmod +s /usr/bin/screen``
 

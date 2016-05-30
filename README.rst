@@ -66,9 +66,12 @@ Features
 * screen code insertion
 * screen monitoring/logging
 * screen session sharing with unix users
+
     - to allow this feature, you will **need** to change some unixs rigths:
-        + ``sudo chmod +s /usr/bin/screen``
-        + ``sudo chmod 755 /var/run/screen``
+
+      + ``sudo chmod +s /usr/bin/screen``
+
+      + ``sudo chmod 755 /var/run/screen``
 
 Core Documentation
 ------------------
@@ -77,13 +80,16 @@ Core Documentation
 
 * ``Screen(name, intialize=False)`` Create a new screen.
 
-    - ``name`` (required): The name associated with the screen.
-    - ``Initialize``: If True, creates a screen session if it does not exists.
+  - ``name`` (required): The name associated with the screen.
+
+  - ``Initialize``: If True, creates a screen session if it does not exists.
+
 * ``screen.id`` (property) the id of the screen as a string.
 * ``screen.status`` (property) the status of the screen as a string.
 * ``screen.exists`` (property) True if the screen exists (has been intialized)
 
-    - NOTE: ``.id``, ``.status``, ``.exists`` are all based off of the output of ``screen -ls``
+  - NOTE: ``.id``, ``.status``, ``.exists`` are all based off of the output of ``screen -ls``
+
 * ``screen.intialize`` Initialize a screen if does not exists yet. Equivalant to running ``screen -UR screen_name``
 * ``screen.enable_logs()`` turns Screen's logging on. The Logfile's name is automatically set to that of the ``Screen`` object.
 * ``screen.log`` A generator that acts like ``tailF`` on the logfile.
@@ -92,14 +98,17 @@ Core Documentation
 * ``screen.detach()`` Detach from the screen.
 * ``screen.send_commands(*commands)`` send bash commands to the screen.
 
-    - ``*commands`` the command(s) to run (as a string).
+  - ``*commands`` the command(s) to run (as a string).
+
 * ``screen.add_user_access(unix_user_name)`` Allow another user to access the screen.
 
-    - **unix\_user\_name** (required): the unix name of the user to add.
-    - NOTE: to allow this feature, you will **need** to change some unixs rigths:
+  - **unix\_user\_name** (required): the unix name of the user to add.
 
-        + ``sudo chmod +s /usr/bin/screen``
-        + ``sudo chmod 755 /var/run/screen``
+  - NOTE: to allow this feature, you will **need** to change some unixs rigths:
+
+    + ``sudo chmod +s /usr/bin/screen``
+
+    + ``sudo chmod 755 /var/run/screen``
 
 **Functions** :
 

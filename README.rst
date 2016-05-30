@@ -67,11 +67,11 @@ Features
 * screen monitoring/logging
 * screen session sharing with unix users
 
-    - to allow this feature, you will **need** to change some unixs rigths:
+  - to allow this feature, you will **need** to change some unixs rigths:
 
-      + ``sudo chmod +s /usr/bin/screen``
+    + ``sudo chmod +s /usr/bin/screen``
 
-      + ``sudo chmod 755 /var/run/screen``
+    + ``sudo chmod 755 /var/run/screen``
 
 Core Documentation
 ------------------
@@ -102,7 +102,7 @@ Core Documentation
 
 * ``screen.add_user_access(unix_user_name)`` Allow another user to access the screen.
 
-  - **unix\_user\_name** (required): the unix name of the user to add.
+  - ``unix\_user\_name`` (required): the unix name of the user to add.
 
   - NOTE: to allow this feature, you will **need** to change some unixs rigths:
 

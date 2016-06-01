@@ -104,7 +104,7 @@ class Screen(object):
             filename = self.name
         self._screen_commands("logfile " + filename, "log on")
         self._logfilename = filename
-        system('touch ' + filename)
+        open(filename, 'w+')
         self.logs = tailf(filename)
 
     def disable_logs(self, remove_logfile=False):

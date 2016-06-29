@@ -73,6 +73,7 @@ class Screen(object):
         self._status = None
         self.logs = None
         self._logfilename = None
+        self._pid = None
         if initialize:
             self.initialize()
 
@@ -98,6 +99,15 @@ class Screen(object):
         lines = getoutput("screen -ls | grep " + self.name).split('\n')
         return self.name in [".".join(l.split(".")[1:]).split("\t")[0]
                              for l in lines]
+
+    @property
+    def pid(self):
+        lines = getoutput("screen -ls | grep " + self.name).split('\n')
+        for l in lines:
+            temp_info = l.split('\t')[1].split('.')
+            if self.name == temp_info[1]:
+                self._pid = temp_info[0]
+                return self._pid                         
 
     def enable_logs(self, filename=None):
         if filename is None:
@@ -134,7 +144,7 @@ class Screen(object):
     def detach(self):
         """detach the screen"""
         self._check_exists()
-        system("screen -d " + self.name)
+        system("screen -d " + self.pid)
 
     def send_commands(self, *commands):
         """send commands to the active gnu-screen"""
@@ -152,7 +162,7 @@ class Screen(object):
         a glossary of the existing screen command in `man screen`"""
         self._check_exists()
         for command in commands:
-            system('screen -x ' + self.name + ' -X ' + command)
+            system('screen -x ' + self.pid + ' -X ' + command)
             sleep(0.02)
 
     def _check_exists(self, message="Error code: 404."):

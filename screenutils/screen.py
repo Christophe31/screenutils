@@ -16,7 +16,6 @@ from os import system
 from os.path import isfile, getsize
 from time import sleep
 
-GREP_V = getoutput("grep -V")
 
 def tailf(file_):
     """Each value is content added to the log file since last value return"""
@@ -37,18 +36,11 @@ def tailf(file_):
 def list_screens():
     """List all the existing screens and build a Screen instance for each
     """
-    if "FreeBSD" in GREP_V:
-        #freeBSD doesn't support the -P, "perl-regexp" flag.
-        #It works fine without it though!
-        grep_perl_flag = ""
-    else:
-        grep_perl_flag = " -P"
-
-    list_cmd = "screen -ls | grep{0} '\t'".format(grep_perl_flag)
+    list_cmd = "screen -ls"
     return [
                 Screen(".".join(l.split(".")[1:]).split("\t")[0])
                 for l in getoutput(list_cmd).split('\n')
-                if ".".join(l.split(".")[1:]).split("\t")[0]
+                if "\t" in l and ".".join(l.split(".")[1:]).split("\t")[0]
             ]
 
 
@@ -73,7 +65,6 @@ class Screen(object):
         self._status = None
         self.logs = None
         self._logfilename = None
-        self._pid = None
         if initialize:
             self.initialize()
 
@@ -94,20 +85,10 @@ class Screen(object):
     def exists(self):
         """Tell if the screen session exists or not."""
         # Parse the screen -ls call, to find if the screen exists or not.
-        # The screen -ls | grep name returns something like that:
         #  "	28062.G.Terminal	(Detached)"
-        lines = getoutput("screen -ls | grep " + self.name).split('\n')
+        lines = getoutput("screen -ls").split('\n')
         return self.name in [".".join(l.split(".")[1:]).split("\t")[0]
-                             for l in lines]
-
-    @property
-    def pid(self):
-        lines = getoutput("screen -ls | grep " + self.name).split('\n')
-        for l in lines:
-            temp_info = l.split('\t')[1].split('.')
-            if self.name == temp_info[1]:
-                self._pid = temp_info[0]
-                return self._pid                         
+                             for l in lines if self.name in l]
 
     def enable_logs(self, filename=None):
         if filename is None:
@@ -144,7 +125,7 @@ class Screen(object):
     def detach(self):
         """detach the screen"""
         self._check_exists()
-        system("screen -d " + self.pid)
+        system("screen -d " + self.id)
 
     def send_commands(self, *commands):
         """send commands to the active gnu-screen"""
@@ -162,7 +143,7 @@ class Screen(object):
         a glossary of the existing screen command in `man screen`"""
         self._check_exists()
         for command in commands:
-            system('screen -x ' + self.pid + ' -X ' + command)
+            system('screen -x ' + self.id + ' -X ' + command)
             sleep(0.02)
 
     def _check_exists(self, message="Error code: 404."):
@@ -173,7 +154,16 @@ class Screen(object):
     def _set_screen_infos(self):
         """set the screen information related parameters"""
         if self.exists:
-            infos = getoutput("screen -ls | grep %s" % self.name).split('\t')[1:]
+            line = ""
+            for l in getoutput("screen -ls").split("\n"):
+                if (
+                        self.name in l and
+                        self.name == ".".join(
+                            l.split('\t')[1].split('.')[1:]) in l):
+                    line = l
+            if not line:
+                raise ScreenNotFoundError("While getting info.", screen.name)
+            infos = line.split('\t')[1:]
             self._id = infos[0].split('.')[0]
             if len(infos)==3:
                 self._date = infos[1][1:-1]

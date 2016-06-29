@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='screenutils',
-    version='0.0.1.5.5',
+    version='0.0.1.6.0',
     packages=['screenutils',],
     license='GNU Public License >=2 (ask me if you want other)',
     author="Christophe Narbonne",

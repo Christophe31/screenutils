@@ -13,7 +13,7 @@ except:
     from subprocess import getoutput
 from threading import Thread
 from os import system
-from os.path import isfile, getsize
+from os.path import getsize
 from time import sleep
 
 
@@ -22,7 +22,7 @@ def tailf(file_):
     last_size = getsize(file_)
     while True:
         cur_size = getsize(file_)
-        if ( cur_size != last_size ):
+        if (cur_size != last_size):
             f = open(file_, 'r')
             f.seek(last_size if cur_size > last_size else 0)
             text = f.read()
@@ -102,12 +102,12 @@ class Screen(object):
         self._screen_commands("log off")
         if remove_logfile:
             system('rm ' + self._logfilename)
-        self.logs=None
+        self.logs = None
 
     def initialize(self):
         """initialize a screen, if does not exists yet"""
         if not self.exists:
-            self._id=None
+            self._id = None
             # Detach the screen once attached, on a new tread.
             Thread(target=self._delayed_detach).start()
             # support Unicode (-U),
@@ -131,8 +131,8 @@ class Screen(object):
         """send commands to the active gnu-screen"""
         self._check_exists()
         for command in commands:
-            self._screen_commands( 'stuff "' + command + '" ' ,
-                                   'eval "stuff \\015"' )
+            self._screen_commands('stuff "' + command + '" ',
+                                  'eval "stuff \\015"')
 
     def add_user_access(self, unix_user_name):
         """allow to share your session with an other unix user"""
@@ -162,10 +162,10 @@ class Screen(object):
                             l.split('\t')[1].split('.')[1:]) in l):
                     line = l
             if not line:
-                raise ScreenNotFoundError("While getting info.", screen.name)
+                raise ScreenNotFoundError("While getting info.", self.name)
             infos = line.split('\t')[1:]
             self._id = infos[0].split('.')[0]
-            if len(infos)==3:
+            if len(infos) == 3:
                 self._date = infos[1][1:-1]
                 self._status = infos[2][1:-1]
             else:

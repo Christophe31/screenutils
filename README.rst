@@ -3,8 +3,10 @@ screenutils
 
 screenutils is a set of classes that should help handling gnu-screen windows.
 
+It requires gnu-screen binary installed (named screen and in your path) to work.
+
 Feel free to report any modification you made, the whole code source is
-available under the terms of the GPLv2.
+available under the terms of the GPLv2 but I think about using a more permissave license (WTFPL).
 
 Example usage
 -------------

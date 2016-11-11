@@ -16,7 +16,7 @@ Example in a python console::
    >>> from screenutils import list_screens, Screen
    >>> list_screens()
    []
-   >>> s= Screen("session1",True)
+   >>> s = Screen("session1",True)
    >>> # funky prompts could reduce log visibility. Use sh or bash for best results
    >>> s.send_commands('bash')
    >>> s.enable_logs()
@@ -89,7 +89,7 @@ Core Documentation
 
 * ``screen.initialize`` Initialize a screen if does not exists yet. Equivalent to running ``screen -UR screen_name``
 * ``screen.enable_logs()`` turns Screen's logging on. The Logfile's name is automatically set to that of the ``Screen`` object.
-* ``screen.log`` A generator that acts like ``tailF`` on the logfile.
+* ``screen.logs`` A generator that acts like ``tailF`` on the logfile.
 * ``screen.disable_logs()`` turns logging off.
 * ``screen.kill()`` Quit the screen. Equivalent to running ``screen -x screen_name -X quit``
 * ``screen.detach()`` Detach from the screen.

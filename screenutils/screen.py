@@ -157,6 +157,7 @@ class Screen(object):
             line = ""
             for l in getoutput("screen -ls").split("\n"):
                 if (
+                        l.startswith('\t') and
                         self.name in l and
                         self.name == ".".join(
                             l.split('\t')[1].split('.')[1:]) in l):

@@ -1,3 +1,7 @@
+CAUTION: this project is not maintained anymore as it's maintainer don't use it anymore
+(and switched to tmux). If you contribute a bit, you may reclaim this project.
+
+
 screenutils
 ===========
 
